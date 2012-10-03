@@ -1,11 +1,11 @@
 class redis::config {
-  require github::config
+  require boxen::config
 
-  $configdir  = "${github::config::configdir}/redis"
+  $configdir  = "${boxen::config::configdir}/redis"
   $configfile = "${configdir}/redis.conf"
-  $datadir    = "${github::config::datadir}/redis"
-  $executable = "${github::config::home}/homebrew/bin/redis-server"
-  $logdir     = "${github::config::logdir}/redis"
+  $datadir    = "${boxen::config::datadir}/redis"
+  $executable = "${boxen::config::home}/homebrew/bin/redis-server"
+  $logdir     = "${boxen::config::logdir}/redis"
   $port       = 16379
 
   file { [$configdir, $datadir, $logdir]:
@@ -14,16 +14,16 @@ class redis::config {
 
   file { $configfile:
     content => template('redis/redis.conf.erb'),
-    notify  => Service['com.setup.redis'],
+    notify  => Service['com.boxen.redis'],
   }
 
-  file { "${github::config::homebrewdir}/etc/redis.conf":
+  file { "${boxen::config::homebrewdir}/etc/redis.conf":
     ensure  => absent,
     require => Package['redis']
   }
 
-  file { "${github::config::envdir}/redis.sh":
+  file { "${boxen::config::envdir}/redis.sh":
     content => template('redis/env.sh.erb'),
-    require => File[$github::config::envdir]
+    require => File[$boxen::config::envdir]
   }
 }

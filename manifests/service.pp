@@ -1,20 +1,19 @@
 class redis::service {
-  file { '/Library/LaunchDaemons/com.setup.redis.plist':
-    content => template('redis/com.setup.redis.plist.erb'),
+  file { '/Library/LaunchDaemons/com.boxen.redis.plist':
+    content => template('redis/com.boxen.redis.plist.erb'),
     group   => 'wheel',
-    notify  => Service['com.setup.redis'],
+    notify  => Service['com.boxen.redis'],
     owner   => 'root'
   }
 
-  file { "${github::config::homebrewdir}/var/db/redis":
+  file { "${boxen::config::homebrewdir}/var/db/redis":
     ensure  => absent,
     force   => true,
     recurse => true,
     require => Package['redis']
   }
 
-  service { 'com.setup.redis':
-    ensure  => running,
-    require => Package['redis']
+  service { 'com.boxen.redis':
+    ensure  => running
   }
 }
