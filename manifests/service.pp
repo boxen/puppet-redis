@@ -1,4 +1,11 @@
+# Configure redis service plist and run service.
+#
+# Usage:
+#
+#     include redis::service
 class redis::service {
+  require redis::config
+
   file { '/Library/LaunchDaemons/com.boxen.redis.plist':
     content => template('redis/com.boxen.redis.plist.erb'),
     group   => 'wheel',

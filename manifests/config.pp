@@ -1,3 +1,8 @@
+# Config vars and files for redis.
+#
+# Usage:
+#
+#     include redis::config
 class redis::config {
   require boxen::config
 
@@ -23,7 +28,6 @@ class redis::config {
   }
 
   file { "${boxen::config::envdir}/redis.sh":
-    content => template('redis/env.sh.erb'),
-    require => File[$boxen::config::envdir]
+    content => template('redis/env.sh.erb')
   }
 }
