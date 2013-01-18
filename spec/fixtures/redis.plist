@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>com.boxen.redis</string>
+    <string>dev.redis</string>
 
     <key>Boxen</key>
     <dict>

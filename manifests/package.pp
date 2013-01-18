@@ -1,10 +1,10 @@
-# Install redis from homebrew and notify service com.boxen.redis.
+# Install redis from homebrew and notify service dev.redis.
 #
 # Usage:
 #
 #     include redis::package
 class redis::package {
   package { 'redis':
-    notify => Service['com.boxen.redis']
+    notify => Service['dev.redis']
   }
 }

@@ -6,10 +6,10 @@
 class redis::service {
   require redis::config
 
-  file { '/Library/LaunchDaemons/com.boxen.redis.plist':
-    content => template('redis/com.boxen.redis.plist.erb'),
+  file { '/Library/LaunchDaemons/dev.redis.plist':
+    content => template('redis/dev.redis.plist.erb'),
     group   => 'wheel',
-    notify  => Service['com.boxen.redis'],
+    notify  => Service['dev.redis'],
     owner   => 'root'
   }
 
@@ -20,7 +20,12 @@ class redis::service {
     require => Package['redis']
   }
 
-  service { 'com.boxen.redis':
+  service { 'dev.redis':
     ensure  => running
+  }
+
+  service { 'com.boxen.redis': # replaced by dev.redis
+    before => Service['dev.redis'],
+    enable => false
   }
 }
