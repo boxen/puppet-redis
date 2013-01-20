@@ -2,8 +2,8 @@
 
 Requires the following boxen modules:
 
-* `boxen`
-* `homebrew`
+* [boxen](https://github.com/boxen/puppet-boxen)
+* [homebrew](https://github.com/boxen/puppet-homebrew)
 
 ## Usage
 
