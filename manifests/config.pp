@@ -19,7 +19,7 @@ class redis::config {
 
   file { $configfile:
     content => template('redis/redis.conf.erb'),
-    notify  => Service['com.boxen.redis'],
+    notify  => Service['dev.redis'],
   }
 
   file { "${boxen::config::homebrewdir}/etc/redis.conf":
