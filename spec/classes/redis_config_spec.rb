@@ -22,7 +22,7 @@ describe 'redis::config' do
 
     should contain_file(configfile).with({
       :content => File.read('spec/fixtures/redis.conf'),
-      :notify => 'Service[com.boxen.redis]'
+      :notify => 'Service[dev.redis]'
     })
 
     should contain_file("#{brewdir}/etc/redis.conf").with({
