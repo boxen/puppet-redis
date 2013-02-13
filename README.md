@@ -1,15 +1,16 @@
 # Redis Puppet Module for Boxen
 
-Requires the following boxen modules:
-
-* [boxen](https://github.com/boxen/puppet-boxen)
-* [homebrew](https://github.com/boxen/puppet-homebrew)
-
 ## Usage
 
 ```puppet
 include redis
 ```
+
+## Required Puppet Modules
+
+* boxen
+* homebrew
+* stdlib
 
 ### Environment
 

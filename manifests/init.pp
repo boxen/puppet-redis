@@ -4,8 +4,8 @@
 #
 #     include redis
 class redis {
-  require homebrew
-  require redis::config
+  include homebrew
+  include redis::config
 
   file { [
     $redis::config::configdir,
