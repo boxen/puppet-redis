@@ -1,63 +1,72 @@
 require 'spec_helper'
 
 describe 'redis' do
-let(:boxen_home) { '/opt/boxen' }
-let(:brewdir)    { "#{boxen_home}/homebrew" }
-let(:configdir)  { "#{boxen_home}/config/redis" }
-let(:configfile) { "#{configdir}/redis.conf" }
-let(:datadir)    { "#{boxen_home}/data/redis" }
-let(:envdir)     { "#{boxen_home}/env.d" }
-let(:logdir)     { "#{boxen_home}/log/redis" }
-let(:facts) do
-  {
-    :boxen_home => boxen_home,
-    :luser      => 'wfarr',
-    :boxen_user => 'wfarr'
-  }
-end
+  context 'Debian' do
+    let(:facts) {
+      {
+      :osfamily => 'Debian'
+    }
+    }
+    let(:configfile) { '/etc/redis.conf' }
+    let(:configdir) { '/etc/' }
+    let(:datadir) { '/var/lib/redis' }
+    let(:logdir) { '/var/log/redis' }
+    let(:package_name) { 'redis-server' }
+    let(:service_name) { 'redis-server' }
+    let(:version) { 'installed' }
+    let(:redis_directories) { [
+      configdir,
+      datadir,
+      logdir
+    ]}
 
-  it do
-    should contain_file(configdir).with_ensure('directory')
-    should contain_file(datadir).with_ensure('directory')
-    should contain_file(logdir).with_ensure('directory')
-
-    should contain_file(configfile).with({
-      #:content => File.read('spec/fixtures/redis.conf'),
-      :notify => 'Service[dev.redis]'
-    })
-
-    should contain_file("#{brewdir}/etc/redis.conf").with({
-      :ensure  => 'absent',
-      :require => 'Package[boxen/brews/redis]'
-    })
-
-    should contain_file("#{envdir}/redis.sh")
-    #.with({
-    #  :content => File.read('spec/fixtures/redis.sh')
-    #})
-
-    should contain_homebrew__formula('redis').with_before('Package[boxen/brews/redis]')
-    should contain_package('boxen/brews/redis').with({
-      :ensure => '2.6.9-boxen1',
-      :notify => 'Service[dev.redis]'
-    })
-
-    should include_class('redis::config')
-
-    should contain_file('/Library/LaunchDaemons/dev.redis.plist').with({
-      #:content => File.read('spec/fixtures/redis.plist'),
-      :group   => 'wheel',
-      :notify  => 'Service[dev.redis]',
-      :owner   => 'root'
-    })
-
-    should contain_file('/opt/boxen/homebrew/var/db/redis').with({
-      :ensure  => 'absent',
-      :force   => true,
-      :recurse => true,
-      :require => 'Package[boxen/brews/redis]'
-    })
-
-    should contain_service('dev.redis').with_ensure('running')
+    it do
+      should contain_file('/etc/redis.conf').with({
+        :notify => 'Service[redis]'
+      })
+      should contain_package('redis').with({
+        :ensure => version,
+        :name   => package_name,
+        :notify => 'Service[redis]'
+      })
+      should include_class('redis::config')
+      should contain_service('redis').with({
+        :ensure  => 'running',
+        :name    => service_name
+      })
+      redis_directories.each do |directory|
+        should contain_file(directory).with_ensure(:directory)
+      end
+    end
   end
+  context 'Darwin' do
+    let(:facts) {
+      {
+      :osfamily   => 'Darwin',
+      :boxen_home => '/opt/boxen'
+      }
+    }
+    let(:configfile) { "#{facts[:boxen_home]}/config/redis/redis.conf" }
+    let(:package_name) { 'boxen/brews/redis' }
+    let(:service_name) { 'dev.redis' }
+    let(:version) { '2.6.9-boxen1' }
+
+    it do
+      should contain_file(configfile).with({
+        :notify => 'Service[redis]'
+      })
+      should contain_package('redis').with({
+        :ensure => version,
+        :name   => package_name,
+        :notify => 'Service[redis]'
+      })
+      should include_class('redis::config')
+      should contain_service('redis').with({
+        :ensure  => 'running',
+        :name    => service_name
+      })
+      should include_class('redis::darwin')
+    end
+  end
+
 end
