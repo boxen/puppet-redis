@@ -54,6 +54,7 @@ describe 'redis' do
         :ensure  => 'running',
         :name    => service_name
       })
+      should include_class('redis::darwin')
     end
   end
 

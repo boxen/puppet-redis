@@ -24,4 +24,9 @@ class redis (
     ensure => running,
     name   => $redis::config::service_name,
   }
+
+  case $::osfamily {
+    'Debian': { include redis::debian }
+    'Darwin': { include redis::darwin }
+  }
 }
