@@ -4,12 +4,29 @@
 #
 #     include redis::config
 class redis::config {
-  require boxen::config
 
-  $configdir  = "${boxen::config::configdir}/redis"
-  $configfile = "${configdir}/redis.conf"
-  $datadir    = "${boxen::config::datadir}/redis"
-  $executable = "${boxen::config::home}/homebrew/bin/redis-server"
-  $logdir     = "${boxen::config::logdir}/redis"
-  $port       = 16379
+  case $::osfamily {
+    'Debian': {
+      $configdir    = '/etc'
+      $configfile = "${configdir}/redis.conf"
+      $datadir    = '/var/lib/redis'
+      $port       = '6379'
+      $logdir     = '/var/log/redis'
+      $package_name = 'redis-server'
+      $service_name = 'redis-server'
+      $version      = 'installed'
+    }
+    'Darwin': {
+      require boxen::config
+      $configdir  = "${boxen::config::configdir}/redis"
+      $configfile = "${configdir}/redis.conf"
+      $datadir    = "${boxen::config::datadir}/redis"
+      $executable = "${boxen::config::home}/homebrew/bin/redis-server"
+      $logdir     = "${boxen::config::logdir}/redis"
+      $port       = 16379
+      $package_name = 'boxen/brews/redis'
+      $service_name = 'dev.redis'
+      $version       = '2.6.9-boxen1'
+    }
+  }
 }
