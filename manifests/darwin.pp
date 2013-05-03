@@ -7,14 +7,6 @@ class redis::darwin {
   include redis::config
   include homebrew
 
-  file { [
-    $redis::config::configdir,
-    $redis::config::datadir,
-    $redis::config::logdir
-  ]:
-    ensure => directory
-  }
-
   file { "${boxen::config::envdir}/redis.sh":
     content => template('redis/env.sh.erb')
   }

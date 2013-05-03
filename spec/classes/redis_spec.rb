@@ -8,12 +8,20 @@ describe 'redis' do
     }
     }
     let(:configfile) { '/etc/redis.conf' }
+    let(:configdir) { '/etc/' }
+    let(:datadir) { '/var/lib/redis' }
+    let(:logdir) { '/var/log/redis' }
     let(:package_name) { 'redis-server' }
     let(:service_name) { 'redis-server' }
     let(:version) { 'installed' }
+    let(:redis_directories) { [
+      configdir,
+      datadir,
+      logdir
+    ]}
 
     it do
-      should contain_file(configfile).with({
+      should contain_file('/etc/redis.conf').with({
         :notify => 'Service[redis]'
       })
       should contain_package('redis').with({
@@ -26,7 +34,10 @@ describe 'redis' do
         :ensure  => 'running',
         :name    => service_name
       })
-        end
+      redis_directories.each do |directory|
+        should contain_file(directory).with_ensure(:directory)
+      end
+    end
   end
   context 'Darwin' do
     let(:facts) {

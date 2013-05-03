@@ -4,10 +4,11 @@
 #
 #     include redis
 class redis (
-  $port    = $redis::config::port,
-  $datadir = $redis::config::datadir,
-  $version = $redis::config::version
-) inherits redis::config {
+    $port      = $redis::config::port,
+    $configdir = $redis::config::configdir,
+    $datadir   = $redis::config::datadir,
+    $version   = $redis::config::version
+  ) inherits redis::config {
 
   package { 'redis':
     ensure => $version,
@@ -15,9 +16,17 @@ class redis (
     notify => Service['redis'],
   }
 
-  file { $redis::config::configfile:
+  file { "${configdir}/redis.conf":
     content => template('redis/redis.conf.erb'),
     notify  => Service['redis'],
+  }
+
+  file { [
+    $configdir,
+    $datadir,
+    $redis::config::logdir
+  ]:
+    ensure => directory
   }
 
   service { 'redis':
