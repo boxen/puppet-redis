@@ -3,7 +3,9 @@
 # Usage:
 #
 #     include redis::config
-class redis::config {
+class redis::config (
+  $port = 16379
+){
   require boxen::config
 
   $configdir  = "${boxen::config::configdir}/redis"
@@ -11,5 +13,4 @@ class redis::config {
   $datadir    = "${boxen::config::datadir}/redis"
   $executable = "${boxen::config::home}/homebrew/bin/redis-server"
   $logdir     = "${boxen::config::logdir}/redis"
-  $port       = 16379
 }
