@@ -31,10 +31,9 @@ end
       :require => 'Package[boxen/brews/redis]'
     })
 
-    should contain_file("#{envdir}/redis.sh")
-    #.with({
-    #  :content => File.read('spec/fixtures/redis.sh')
-    #})
+    should contain_file("#{envdir}/redis.sh").with({
+     :content => File.read('spec/fixtures/redis.sh')
+    })
 
     should contain_homebrew__formula('redis').with_before('Package[boxen/brews/redis]')
     should contain_package('boxen/brews/redis').with({
@@ -59,5 +58,15 @@ end
     })
 
     should contain_service('dev.redis').with_ensure('running')
+  end
+
+  context "should allow port to be specified" do
+    let(:params) { {:port => 1111} }
+
+    it do
+      should contain_class('redis::config').with({
+        :port => 1111
+      })
+    end
   end
 end

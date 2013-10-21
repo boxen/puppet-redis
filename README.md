@@ -1,11 +1,19 @@
 # Redis Puppet Module for Boxen
 
-[![Build Status](https://travis-ci.org/boxen/puppet-redis.png?branch=master)](https://travis-ci.org/boxen/puppet-redis)
+[![Build Status](https://travis-ci.org/mnussbaum/puppet-redis.png?branch=master)](https://travis-ci.org/mnussbaum/puppet-redis)
 
 ## Usage
 
 ```puppet
 include redis
+```
+
+OR to specify the port:
+
+```puppet
+  class { "redis":
+    port => "16379",
+  }
 ```
 
 ## Required Puppet Modules
