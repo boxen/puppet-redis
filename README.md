@@ -8,6 +8,14 @@
 include redis
 ```
 
+OR to specify the port:
+
+```puppet
+class { "redis":
+  port => "16379",
+}
+```
+
 ## Required Puppet Modules
 
 * boxen

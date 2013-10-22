@@ -3,9 +3,11 @@
 # Usage:
 #
 #     include redis
-class redis {
+class redis($port = 16379) {
   include homebrew
-  include redis::config
+  class{ 'redis::config':
+    port => $port,
+  }
 
   file { [
     $redis::config::configdir,
