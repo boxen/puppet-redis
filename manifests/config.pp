@@ -5,7 +5,12 @@
 # class{ 'redis::config':
 #   port => "16379",
 # }
-class redis::config($port) {
+#
+# OR
+#
+# include redis::config
+#
+class redis::config($port = 16379) {
   require boxen::config
 
   $configdir  = "${boxen::config::configdir}/redis"
