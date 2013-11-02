@@ -25,8 +25,13 @@ class redis {
     require => Package['boxen/brews/redis']
   }
 
+  boxen::env_script { 'redis':
+    content  => template('redis/env.sh.erb'),
+    priority => 'lower',
+  }
+
   file { "${boxen::config::envdir}/redis.sh":
-    content => template('redis/env.sh.erb')
+    ensure => absent,
   }
 
   homebrew::formula { 'redis':
