@@ -17,6 +17,8 @@ class redis::package(
   }
 
   if $::operatingsystem == 'Darwin' {
+    include boxen::config
+
     homebrew::formula { 'redis': }
 
     ->

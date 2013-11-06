@@ -4,12 +4,15 @@ class redis::config(
   $ensure        = $redis::params::ensure,
 
   $configdir     = $redis::params::configdir,
+  $datadir       = $redis::params::datadir,
+  $logdir        = $redis::params::logdir,
+  $host          = $redis::params::host,
+  $port          = $redis::params::port,
+  $pidfile       = $redis::params::pidfile,
   $executable    = $redis::params::executable,
-  $configuration = $redis::params::configuration,
+
   $servicename   = $redis::params::servicename,
 ) inherits redis::params {
-
-  $final_config = merge($default_config, $configuration)
 
   $dir_ensure = $ensure ? {
     present => directory,
@@ -18,13 +21,12 @@ class redis::config(
 
   if $::operatingsystem == 'Darwin' {
     include boxen::config
-    include homebrew::config
 
     file {
       "${boxen::config::envdir}/redis.sh":
         ensure => absent ;
 
-      '/Library/LaunchDaemons/${servicename}.plist':
+      "/Library/LaunchDaemons/${servicename}.plist":
         content => template('redis/darwin/redis.plist.erb'),
         group   => 'wheel',
         owner   => 'root' ;
@@ -42,8 +44,8 @@ class redis::config(
   file {
     [
       $configdir,
-      $final_config['dir'],
-      $final_config['logdir'],
+      $datadir,
+      $logdir,
     ]:
       ensure => $dir_ensure ;
 

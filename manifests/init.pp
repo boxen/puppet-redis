@@ -7,39 +7,46 @@ class redis(
   $ensure        = $redis::params::ensure,
 
   $configdir     = $redis::params::configdir,
+  $datadir       = $redis::params::datadir,
+  $logdir        = $redis::params::logdir,
+  $host          = $redis::params::host,
+  $port          = $redis::params::port,
   $executable    = $redis::params::executable,
-  $configuration = {},
 
   $package       = $redis::params::package,
   $version       = $redis::params::version,
 
   $enable        = $redis::params::enable,
   $servicename   = $redis::params::servicename,
- ) inherits redis::params {
+) inherits redis::params {
 
- class { 'redis::config':
-   ensure        => $ensure,
+  class { 'redis::config':
+    ensure        => $ensure,
 
-   configdir     => $configdir,
-   executable    => $executable,
-   configuration => $configuration,
-   servicename   => $servicename,
- }
+    configdir     => $configdir,
+    datadir       => $datadir,
+    logdir        => $logdir,
+    host          => $host,
+    port          => $port,
+    executable    => $executable,
 
- ~>
- class { 'redis::package':
-   ensure  => $ensure,
-
-   package => $package,
-   version => $version,
- }
+    servicename   => $servicename,
+  }
 
  ~>
- class { 'redis::server':
-   ensure      => $ensure,
+  class { 'redis::package':
+    ensure  => $ensure,
 
-   enable      => $enable,
-   servicename => $servicename,
- }
+    package => $package,
+    version => $version,
+  }
+
+ ~>
+  class { 'redis::service':
+    ensure      => $ensure,
+
+    enable      => $enable,
+    servicename => $servicename,
+  }
 
 }

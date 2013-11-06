@@ -11,16 +11,16 @@
       <string>An interesting little data structure server.</string>
 
       <key>Host</key>
-      <string><%= @final_config['host'] %></string>
+      <string><%= @host %></string>
 
       <key>Port</key>
-      <integer><%= @final_config['port] %></integer>
+      <integer><%= @port %></integer>
     </dict>
 
     <key>ProgramArguments</key>
     <array>
       <string><%= @executable %></string>
-      <string><%= "#{@final_config['configdir']}/redis.conf" %></string>
+      <string><%= "#{@configdir}/redis.conf" %></string>
     </array>
 
     <key>RunAtLoad</key>
@@ -33,12 +33,12 @@
     <string><%= scope.lookupvar("::boxen_user") %></string>
 
     <key>WorkingDirectory</key>
-    <string><%= @final_config['datadir'] %></string>
+    <string><%= @datadir %></string>
 
     <key>StandardErrorPath</key>
-    <string><%= @final_config['logdir'] %>/console.log</string>
+    <string><%= "#{@logdir}/console.log" %></string>
 
     <key>StandardOutPath</key>
-    <string><%= @final_config['logdir'] %>/console.log</string>
+    <string><%= "#{@logdir}/console.log" %></string>
   </dict>
 </plist>

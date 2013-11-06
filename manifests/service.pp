@@ -8,7 +8,7 @@ class redis::service(
 ) inherits redis::params {
 
   $real_ensure = $ensure ? {
-    true    => running,
+    present => running,
     default => stopped,
   }
 
