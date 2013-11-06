@@ -8,7 +8,7 @@ class redis(
 
   $configdir     = $redis::params::configdir,
   $executable    = $redis::params::executable,
-  $configuration = $redis::params::configuration,
+  $configuration = {},
 
   $package       = $redis::params::package,
   $version       = $redis::params::version,
