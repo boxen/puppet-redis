@@ -3,66 +3,43 @@
 # Usage:
 #
 #     include redis
-class redis {
-  include homebrew
-  include redis::config
+class redis(
+  $ensure        = $redis::params::ensure,
 
-  file { [
-    $redis::config::configdir,
-    $redis::config::datadir,
-    $redis::config::logdir
-  ]:
-    ensure => directory
-  }
+  $configdir     = $redis::params::configdir,
+  $executable    = $redis::params::executable,
+  $configuration = $redis::params::configuration,
 
-  file { $redis::config::configfile:
-    content => template('redis/redis.conf.erb'),
-    notify  => Service['dev.redis'],
-  }
+  $package       = $redis::params::package,
+  $version       = $redis::params::version,
 
-  file { "${boxen::config::homebrewdir}/etc/redis.conf":
-    ensure  => absent,
-    require => Package['boxen/brews/redis']
-  }
+  $enable        = $redis::params::enable,
+  $servicename   = $redis::params::servicename,
+ ) inherits redis::params {
 
-  boxen::env_script { 'redis':
-    content  => template('redis/env.sh.erb'),
-    priority => 'lower',
-  }
+ class { 'redis::config':
+   ensure        => $ensure,
 
-  file { "${boxen::config::envdir}/redis.sh":
-    ensure => absent,
-  }
+   configdir     => $configdir,
+   executable    => $executable,
+   configuration => $configuration,
+   servicename   => $servicename,
+ }
 
-  homebrew::formula { 'redis':
-    before => Package['boxen/brews/redis'],
-  }
+ ~>
+ class { 'redis::package':
+   ensure  => $ensure,
 
-  package { 'boxen/brews/redis':
-    ensure => '2.6.9-boxen1',
-    notify => Service['dev.redis'],
-  }
+   package => $package,
+   version => $version,
+ }
 
-  file { '/Library/LaunchDaemons/dev.redis.plist':
-    content => template('redis/dev.redis.plist.erb'),
-    group   => 'wheel',
-    notify  => Service['dev.redis'],
-    owner   => 'root'
-  }
+ ~>
+ class { 'redis::server':
+   ensure      => $ensure,
 
-  file { "${boxen::config::homebrewdir}/var/db/redis":
-    ensure  => absent,
-    force   => true,
-    recurse => true,
-    require => Package['boxen/brews/redis']
-  }
+   enable      => $enable,
+   servicename => $servicename,
+ }
 
-  service { 'dev.redis':
-    ensure  => running
-  }
-
-  service { 'com.boxen.redis': # replaced by dev.redis
-    before => Service['dev.redis'],
-    enable => false
-  }
 }
