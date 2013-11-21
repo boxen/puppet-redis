@@ -33,7 +33,7 @@ class redis(
     servicename   => $servicename,
   }
 
- ~>
+  ~>
   class { 'redis::package':
     ensure  => $ensure,
 
@@ -41,7 +41,7 @@ class redis(
     version => $version,
   }
 
- ~>
+  ~>
   class { 'redis::service':
     ensure      => $ensure,
 

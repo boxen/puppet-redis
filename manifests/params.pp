@@ -39,7 +39,7 @@ class redis::params {
     }
 
     default: {
-      fail("Unsupported operating system!")
+      fail('Unsupported operating system!')
     }
   }
 

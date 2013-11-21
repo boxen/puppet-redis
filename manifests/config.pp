@@ -50,7 +50,7 @@ class redis::config(
       ensure => $dir_ensure ;
 
     "${configdir}/redis.conf":
-      ensure => $ensure,
+      ensure  => $ensure,
       content => template('redis/redis.conf.erb') ;
   }
 
