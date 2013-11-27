@@ -31,6 +31,7 @@ class redis(
     executable    => $executable,
 
     servicename   => $servicename,
+    notify        => Service['redis'],
   }
 
   ~>

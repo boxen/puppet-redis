@@ -15,6 +15,7 @@ class redis::service(
   service { $servicename:
     ensure => $real_ensure,
     enable => $enable,
+    alias  => 'redis',
   }
 
   if $::operatingsystem == 'Darwin' {
