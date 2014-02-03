@@ -1,0 +1,3 @@
+---
+redis::ensure: 'present'
+redis::enable: true

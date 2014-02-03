@@ -2,6 +2,11 @@ require "spec_helper"
 
 describe "redis::service" do
   let(:facts) { default_test_facts }
+  let(:params) { {
+    'ensure' => 'present',
+    'enable' => true,
+    'servicename' => 'dev.redis'
+  } }
 
   context "Darwin" do
     let(:facts) { default_test_facts.merge(:operatingsystem => "Darwin") }
@@ -16,7 +21,7 @@ describe "redis::service" do
     let(:facts) { default_test_facts.merge(:operatingsystem => "Ubuntu") }
 
     it do
-      should contain_service("redis-server").with_alias('redis')
+      should_not contain_service("com.boxen.redis").with_ensure(:stopped)
     end
   end
 end

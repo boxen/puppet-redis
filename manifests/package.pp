@@ -1,12 +1,11 @@
 # Internal: manage the redis package
 
 class redis::package(
-  $ensure  = $redis::params::ensure,
+  $ensure  = undef,
 
-  $package = $redis::params::package,
-  $version = $redis::params::version,
-) inherits redis::params {
-
+  $package = undef,
+  $version = undef,
+) {
   $real_ensure = $ensure ? {
     present => $version,
     default => absent,

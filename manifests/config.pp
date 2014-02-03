@@ -1,18 +1,18 @@
 # Internal: configuration required to do redis
 
 class redis::config(
-  $ensure        = $redis::params::ensure,
+  $ensure        = undef,
 
-  $configdir     = $redis::params::configdir,
-  $datadir       = $redis::params::datadir,
-  $logdir        = $redis::params::logdir,
-  $host          = $redis::params::host,
-  $port          = $redis::params::port,
-  $pidfile       = $redis::params::pidfile,
-  $executable    = $redis::params::executable,
+  $configdir     = undef,
+  $datadir       = undef,
+  $logdir        = undef,
+  $host          = undef,
+  $port          = undef,
+  $pidfile       = undef,
+  $executable    = undef,
 
-  $servicename   = $redis::params::servicename,
-) inherits redis::params {
+  $servicename   = undef,
+) {
 
   $dir_ensure = $ensure ? {
     present => directory,

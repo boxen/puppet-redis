@@ -1,0 +1,10 @@
+---
+redis::configdir:    '/etc/redis'
+redis::datadir:      '/data/redis'
+redis::logdir:       '/var/log/redis'
+redis::host:         "%{::ipaddress}"
+redis::port:         '6379'
+redis::pidfile:      '/run/redis.pid'
+redis::package:      'redis-server'
+redis::version:      'installed'
+redis::servicename:  'redis-server'

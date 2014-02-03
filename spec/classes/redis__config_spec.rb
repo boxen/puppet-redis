@@ -2,6 +2,18 @@ require "spec_helper"
 
 describe "redis::config" do
   let(:facts) { default_test_facts }
+  let(:params) { {
+    'ensure'       => 'present',
+    'configdir'    => '/test/boxen/config/redis',
+    'datadir'      => '/test/boxen/data/redis',
+    'logdir'       => '/test/boxen/log/redis',
+    'host'         => '127.0.0.1',
+    'port'         => '16379',
+    'pidfile'      => '/test/boxen/data/redis/pid',
+    'executable'   => '/test/boxen/homebrew/bin/redis-server',
+
+    'servicename'  => 'dev.redis',
+  } }
 
   context "Darwin" do
     let(:facts) { default_test_facts.merge(:operatingsystem => "Darwin") }
