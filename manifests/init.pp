@@ -16,6 +16,8 @@ class redis(
   $package       = undef,
   $version       = undef,
 
+  $config_values = undef,
+
   $enable        = undef,
   $servicename   = undef,
 ) {
@@ -44,6 +46,8 @@ class redis(
     host          => $host,
     port          => $port,
     executable    => $executable,
+
+    config_values => $config_values,
 
     servicename   => $servicename,
     notify        => Service['redis'],

@@ -11,8 +11,9 @@ describe "redis::config" do
     'port'         => '16379',
     'pidfile'      => '/test/boxen/data/redis/pid',
     'executable'   => '/test/boxen/homebrew/bin/redis-server',
+    'config_values' => { 'port' => '6379', 'daemonize' => 'no' },
 
-    'servicename'  => 'dev.redis',
+    'servicename'  => 'dev.redis'
   } }
 
   context "Darwin" do
