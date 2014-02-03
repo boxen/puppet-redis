@@ -13,9 +13,10 @@ redis::config_values:
 
   databases: 16
 
-  save: 900 1
-  save: 300 10
-  save: 60 10000
+  save:
+    - 900 1
+    - 300 10
+    - 60 10000
 
   rdbcompression: yes
   dbfilename: dump.rdb
