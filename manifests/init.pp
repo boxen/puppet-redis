@@ -4,21 +4,36 @@
 #
 #     include redis
 class redis(
-  $ensure        = $redis::params::ensure,
+  $ensure        = undef,
 
-  $configdir     = $redis::params::configdir,
-  $datadir       = $redis::params::datadir,
-  $logdir        = $redis::params::logdir,
-  $host          = $redis::params::host,
-  $port          = $redis::params::port,
-  $executable    = $redis::params::executable,
+  $configdir     = undef,
+  $datadir       = undef,
+  $logdir        = undef,
+  $host          = undef,
+  $port          = undef,
+  $executable    = undef,
 
-  $package       = $redis::params::package,
-  $version       = $redis::params::version,
+  $package       = undef,
+  $version       = undef,
 
-  $enable        = $redis::params::enable,
-  $servicename   = $redis::params::servicename,
-) inherits redis::params {
+  $enable        = undef,
+  $servicename   = undef,
+) {
+  validate_string(
+    $ensure,
+    $configdir,
+    $datadir,
+    $logdir,
+    $host,
+    $port,
+    $package,
+    $version,
+    $servicename,
+  )
+
+  validate_bool(
+    $enable,
+  )
 
   class { 'redis::config':
     ensure        => $ensure,

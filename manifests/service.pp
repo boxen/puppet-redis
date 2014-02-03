@@ -1,11 +1,11 @@
 # Internal: management of the redis service
 
 class redis::service(
-  $ensure      = $redis::params::ensure,
+  $ensure      = undef,
 
-  $servicename = $redis::params::servicename,
-  $enable      = $redis::params::enable,
-) inherits redis::params {
+  $servicename = undef,
+  $enable      = undef,
+) {
 
   $real_ensure = $ensure ? {
     present => running,
