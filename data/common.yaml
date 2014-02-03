@@ -25,8 +25,6 @@ redis::config_values:
   appendonly: no
   appendfsync: everysec
   no-appendfsync-on-rewrite: no
-  auto-aof-rewrite-percentage: 100
-  auto-aof-rewrite-min-size: 64mb
 
   slowlog-log-slower-than: 10000
   slowlog-max-len: 1024
@@ -35,8 +33,5 @@ redis::config_values:
   list-max-ziplist-value: 64
 
   set-max-intset-entries: 512
-
-  zset-max-ziplist-entries: 128
-  zset-max-ziplist-value: 64
 
   activerehashing: yes
