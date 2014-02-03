@@ -15,6 +15,7 @@ class redis::config(
 
   $servicename   = undef,
 ) {
+  include boxen::config
 
   $dir_ensure = $ensure ? {
     present => directory,
@@ -22,8 +23,6 @@ class redis::config(
   }
 
   if $::operatingsystem == 'Darwin' {
-    include boxen::config
-
     file {
       "${boxen::config::envdir}/redis.sh":
         ensure => absent ;
