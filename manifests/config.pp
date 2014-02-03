@@ -11,6 +11,8 @@ class redis::config(
   $pidfile       = undef,
   $executable    = undef,
 
+  $config_values = undef,
+
   $servicename   = undef,
 ) {
 
