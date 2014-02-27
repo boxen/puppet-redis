@@ -14,6 +14,28 @@ include redis
 * homebrew
 * stdlib
 
+## Hiera
+
+To configure redis you need hiera
+
+config/hiera.yml
+```
+---
+:yaml:
+  :datadir: '/opt/boxen/repo'
+:hierarchy:
+  - hieradata/common
+  - shared/redis/data/common
+  - shared/redis/data/Darwin
+```
+
+now you can overwrite settings like this:
+hieradata/common.yaml
+```
+---
+redis::port: "6379"
+```
+
 ### Environment
 
 Once installed, you can access the following variables in your environment, projects, etc:
