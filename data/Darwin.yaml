@@ -3,7 +3,7 @@ redis::configdir:   "%{::boxen::config::configdir}/redis"
 redis::datadir:     "%{::boxen::config::datadir}/redis"
 redis::logdir:      "%{::boxen::config::logdir}/redis"
 redis::host:        '127.0.0.1'
-redis::port:        '16379'
+redis::port:        '6379'
 redis::pidfile:     "%{::boxen::config::datadir}/redis/pid"
 redis::executable:  "%{::boxen::config::homebrewdir}/bin/redis-server"
 redis::package:     'boxen/brews/redis'
