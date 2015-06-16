@@ -5,7 +5,7 @@ describe "redis::package" do
   let(:params) { {
     'ensure' => 'present',
     'package' => 'boxen/brews/redis',
-    'version' => '2.8.6-boxen1'
+    'version' => '2.8.21-boxen1'
   } }
 
   it do

@@ -7,5 +7,5 @@ redis::port:        '16379'
 redis::pidfile:     "%{::boxen::config::datadir}/redis/pid"
 redis::executable:  "%{::boxen::config::homebrewdir}/bin/redis-server"
 redis::package:     'boxen/brews/redis'
-redis::version:     '2.8.6-boxen1'
+redis::version:     '2.8.21-boxen1'
 redis::servicename: 'dev.redis'
