@@ -2,15 +2,10 @@ require 'formula'
 
 class Redis < Formula
   homepage 'http://redis.io/'
-  url 'http://download.redis.io/releases/redis-2.8.6.tar.gz'
-  sha1 '8680046580c75987961241f2e1e417c242b91a49'
+  url 'http://download.redis.io/releases/redis-2.8.21.tar.gz'
+  sha1 '52f619d3d301fc7ae498a1d4cb4d44ecebc5b0f9'
 
-  version '2.8.6-boxen1'
-
-  fails_with :llvm do
-    build 2334
-    cause 'Fails with "reference out of range from _linenoise"'
-  end
+  version '2.8.21-boxen1'
 
   def install
     # Architecture isn't detected correctly on 32bit Snow Leopard without help
