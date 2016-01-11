@@ -35,10 +35,11 @@ class redis::config(
 
     ->
     boxen::env_script { 'redis-fish':
-      ensure    => $ensure,
-      content   => template('redis/darwin/env.fish.erb'),
-      priority  => 'lower',
-      extension => 'fish',
+      ensure     => $ensure,
+      content    => template('redis/darwin/env.fish.erb'),
+      priority   => 'lower',
+      scriptname => 'redis',
+      extension  => 'fish',
     }
 
     boxen::env_script { 'redis':
